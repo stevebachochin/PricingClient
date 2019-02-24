@@ -1,0 +1,27 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay">
+    <div class="loader-overlay" *ngIf="!resourceLoaded">
+      <div>
+        <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="panel-heading"><span class="hdr">Approvals Setup</span></div>
+      <table mat-table class="datatable" [dataSource]="(allApprovals)" matSort>
+        <tr>
+          <ng-container matColumnDef="Territory">
+            <th *matHeaderCellDef class="tblCellHalf">Territory</th>
+            <td *matCellDef="let item" class="tblCellHalf"><a routerLink="/approvalsform/{{item.aid}}">{{item.Territory == "n/a" ? "Non-Specific" : item.Territory }}</a></td>
+          </ng-container>
+          <ng-container matColumnDef="FormTypeName">
+            <th *matHeaderCellDef class="tblCellHalf">Form Type</th>
+            <td *matCellDef="let item" class="tblCellHalf"><a routerLink="/approvalsform/{{item.aid}}">{{item.FormTypeName}}</a></td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <tr class="datarow" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+  </div>

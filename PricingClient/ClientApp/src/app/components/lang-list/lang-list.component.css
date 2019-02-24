@@ -1,0 +1,153 @@
+th{
+  color: #007DC5;
+  padding-left: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.container {
+  
+}
+
+
+.mat-table tbody, .mat-table tfoot, .mat-table thead, .mat-table-sticky, [mat-footer-row], [mat-header-row], [mat-row], mat-footer-row, mat-header-row, mat-row {
+  background: inherit;
+  padding: 10px;
+  display: block;
+  background-color: transparent;
+}
+.mat-table tbody {
+
+}
+
+
+
+.fmlabelright {
+  color: #007DC5;
+  padding-left: 0px;
+  padding-right: 0px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.panel-heading {
+  padding-bottom: 40px;
+}
+
+.panel-primary {
+  border-color: transparent;
+  padding-bottom: 20px;
+}
+
+.panel-primary > .panel-heading {
+  color: #007DC5;
+  background-color: transparent;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  padding: 200px;
+}
+
+td, th {
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+tr.mat-footer-row, tr.mat-row {
+  height: 38px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+
+
+tr:nth-child(even) {
+  background-color: #EAF1F7;
+}
+
+tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+tr.datarow:hover {
+  background-color: #ffff99;
+}
+
+select {
+  height: 24px;
+}
+
+.hdr {
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 10px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #58595B;
+  display: block;
+  width: 100%;
+}
+
+.tblCell{
+  width: 30%;
+  display: inline-block;
+}
+
+.tblCellHalf{
+  width: 50%;
+  display: inline-block;
+}
+
+tr.mat-header-row {
+  padding-bottom: 10px;
+  height: unset;
+  border-color: #F0F0F0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px RGBA(0,24,48,0.2);
+}
+
+th {
+
+}
+
+.mat-table{
+  background: unset;
+ 
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  padding-top: 4px;
+}
+
+.btn-primary {
+  background-color: #4DBEEE;
+  color: white;
+  border-color: #2e6da4;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border-color: #ccc;
+  box-shadow: 0 1px 3px RGBA(0,24,48,0.2);
+  box-shadow: 3px 3px 12px 1px rgba(0,0,0,0.2);
+}
+
+
+.btn-primary:hover {
+  background-color: #007DC5;
+}
+
+.buttton {
+  text-align: right;
+}

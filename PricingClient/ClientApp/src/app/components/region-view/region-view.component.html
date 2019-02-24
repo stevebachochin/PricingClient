@@ -1,0 +1,27 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay">
+    <div class="loader-overlay" *ngIf="!resourceLoaded">
+      <div>
+        <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="panel-heading"><span class="hdr">Regions</span></div>
+      <table mat-table class="datatable" [dataSource]="(allRegions)" matSort>
+        <tr>
+          <ng-container matColumnDef="Region1">
+            <th *matHeaderCellDef class="tblCellHalf">Region</th>
+            <td *matCellDef="let item" class="tblCellHalf"><a routerLink="/regionform/{{item.rid}}">{{item.Region1}}</a></td>
+          </ng-container>
+          <ng-container matColumnDef="Approver">
+            <th *matHeaderCellDef class="tblCellHalf">Approver</th>
+            <td *matCellDef="let item" class="tblCellHalf"><a routerLink="/regionform/{{item.rid}}">{{item.Approver}}</a></td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <tr class="datarow" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+  </div>

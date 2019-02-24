@@ -1,0 +1,435 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay" *ngIf="!resourceLoaded">
+    <div>
+      <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  <div>
+    <!--
+    <form (ngSubmit)="updateForm(formData)" #fieldForm="ngForm">
+
+      <div class="panel-heading row">
+        <div class="col-sm-12"><span class="hdr"><br />{{langData?.AdminMenuLangSetup}}<br />{{langData?.LangNameEnglish}}&nbsp;({{langData?.Lang1}})</span><br /><span class="fld">{{langData?.SubTitle}}</span></div>
+        <div class="col-sm-12 errmsg" [innerHTML]="getFormMsg()"></div>
+        <div class="col-sm-6 hdr buttton">
+          <langpicklist></langpicklist>
+          <button type="submit" class="btn btn-default" [disabled]="!fieldForm.valid"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;{{langData?.SubmitButton}}</button><a [routerLink]="['/langlist']"><button class="btn btn-default"><span class='glyphicon glyphicon-circle-arrow-left'></span>&nbsp;{{langData?.BackButton}}</button></a>
+        </div>
+      </div>
+      <div class="container0">
+        <div>
+          <div id="row1" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Lang}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="2" minlength="2" class="form-control" name="Lang" #name="ngModel" [(ngModel)]="formData.Lang" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Header}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="Header" #name="ngModel" [(ngModel)]="formData.Header" required></div>
+            </div>
+          </div>
+
+          <div id="row2" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Title}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="Title" #name="ngModel" [(ngModel)]="formData.Title" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SubTitle}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="SubTitle" #name="ngModel" [(ngModel)]="formData.SubTitle" required></div>
+            </div>
+          </div>
+          <div id="row3" class="row">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Instructions}}</div>
+              <div class="col-sm-12 fld" [ngClass]="{'col-sm-11':true,'fld':true,'textAreaRequired':!fieldForm.form.controls.Instructions?.valid, 'textAreaRequiredOK':fieldForm.form.controls.Instructions?.valid}">
+                <textarea ref-textarea maxlength="500" [(ngModel)]="formData.Instructions" name="Instructions" #name="ngModel" class="form-control" rows="2" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div id="row4" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SectionA}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="SectionA" #name="ngModel" [(ngModel)]="formData.SectionA" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SectionB}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="SectionB" #name="ngModel" [(ngModel)]="formData.SectionB" required></div>
+            </div>
+          </div>
+          <div id="row5" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.CName}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="CName" #name="ngModel" [(ngModel)]="formData.CName" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.CTitle}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="CTitle" #name="ngModel" [(ngModel)]="formData.CTitle" required></div>
+            </div>
+          </div>
+          <div id="row6" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.FacName}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="FacName" #name="ngModel" [(ngModel)]="formData.FacName" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.FacAddress}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="FacAddress" #name="ngModel" [(ngModel)]="formData.FacAddress" required></div>
+            </div>
+          </div>
+          <div id="row7" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.FacPhone}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="FacPhone" #name="ngModel" [(ngModel)]="formData.FacPhone" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SurgeonName}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="SurgeonName" #name="ngModel" [(ngModel)]="formData.SurgeonName" required></div>
+            </div>
+          </div>
+          <div id="row8" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SurgeonEmail}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="SurgeonEmail" #name="ngModel" [(ngModel)]="formData.SurgeonEmail" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.CryolifeRep}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="CryolifeRep" #name="ngModel" [(ngModel)]="formData.CryolifeRep" required></div>
+            </div>
+          </div>
+          <div id="row9" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.RegionMgr}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="RegionMgr" #name="ngModel" [(ngModel)]="formData.RegionMgr" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Letter}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="Letter" #name="ngModel" [(ngModel)]="formData.Letter" required></div>
+            </div>
+          </div>
+          <div id="row10" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LetterAck}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="LetterAck" #name="ngModel" [(ngModel)]="formData.LetterAck" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LetterFinal}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="50" class="form-control" name="LetterFinal" #name="ngModel" [(ngModel)]="formData.LetterFinal" required></div>
+            </div>
+          </div>
+          <div id="row11" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LetterNone}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="LetterNone" #name="ngModel" [(ngModel)]="formData.LetterNone" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LetterSendTo}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="LetterSendTo" #name="ngModel" [(ngModel)]="formData.LetterSendTo" required></div>
+            </div>
+          </div>
+          <div id="row12" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.ReturnSample}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="ReturnSample" #name="ngModel" [(ngModel)]="formData.ReturnSample" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.ReturnSampleY}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="ReturnSampleY" #name="ngModel" [(ngModel)]="formData.ReturnSampleY" required></div>
+            </div>
+          </div>
+          <div id="row13" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.ReturnSampleN}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="ReturnSampleN" #name="ngModel" [(ngModel)]="formData.ReturnSampleN" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.RMANumber}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="RMANumber" #name="ngModel" [(ngModel)]="formData.RMANumber" required></div>
+            </div>
+          </div>
+          <div id="row14" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Product}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="Product" #name="ngModel" [(ngModel)]="formData.Product" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SerialLotNumber}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="SerialLotNumber" #name="ngModel" [(ngModel)]="formData.SerialLotNumber" required></div>
+            </div>
+          </div>
+          <div id="row15" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.UDI}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="UDI" #name="ngModel" [(ngModel)]="formData.UDI" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Implanted}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="Implanted" #name="ngModel" [(ngModel)]="formData.Implanted" required></div>
+            </div>
+          </div>
+          <div id="row16" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.DateIncident}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="DateIncident" #name="ngModel" [(ngModel)]="formData.DateIncident" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.DateReported}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="DateReported" #name="ngModel" [(ngModel)]="formData.DateReported" required></div>
+            </div>
+          </div>
+          <div id="row17" class="row">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Outcome}}</div>
+              <div class="col-sm-12 fld" [ngClass]="{'col-sm-11':true,'fld':true,'textAreaRequired':!fieldForm.form.controls.Outcome?.valid, 'textAreaRequiredOK':fieldForm.form.controls.Outcome?.valid}">
+                <textarea ref-textarea maxlength="1000" [(ngModel)]="formData.Outcome" name="Outcome" #name="ngModel" class="form-control" rows="2" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div id="row175" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Description}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="1000" class="form-control" name="DateReported" #name="ngModel" [(ngModel)]="formData.Description" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.NewLangRecord}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="NewLangRecord" #name="ngModel" [(ngModel)]="formData.NewLangRecord" required></div>
+            </div>
+          </div>
+          <div id="row18" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.DocumentNumber}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="DocumentNumber" #name="ngModel" [(ngModel)]="formData.DocumentNumber" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.EffectiveDate}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="EffectiveDate" #name="ngModel" [(ngModel)]="formData.EffectiveDate" required></div>
+            </div>
+          </div>
+          <div id="row3" class="row">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.WelcomeMsg}}</div>
+              <div class="col-sm-12 fld" [ngClass]="{'col-sm-11':true,'fld':true,'textAreaRequired':!fieldForm.form.controls.WelcomeMsg?.valid, 'textAreaRequiredOK':fieldForm.form.controls.WelcomeMsg?.valid}">
+                <textarea ref-textarea maxlength="2000" [(ngModel)]="formData.WelcomeMsg" name="WelcomeMsg" #name="ngModel" class="form-control" rows="4" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div id="row19" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LangName}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="LangName" #name="ngModel" [(ngModel)]="formData.LangName" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.UnsavedChanges}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="UnsavedChanges" #name="ngModel" [(ngModel)]="formData.UnsavedChanges" required></div>
+            </div>
+          </div>
+          <div id="row20" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.EditButton}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="EditButton" #name="ngModel" [(ngModel)]="formData.EditButton" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.BackButton}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="50" class="form-control" name="BackButton" #name="ngModel" [(ngModel)]="formData.BackButton" required></div>
+            </div>
+          </div>
+          <div id="row21" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SubmitButton}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="SubmitButton" #name="ngModel" [(ngModel)]="formData.SubmitButton" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SubmittedBy}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="SubmittedBy" #name="ngModel" [(ngModel)]="formData.SubmittedBy" required></div>
+            </div>
+          </div>
+          <div id="row22" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.DateSubmitted}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="DateSubmitted" #name="ngModel" [(ngModel)]="formData.DateSubmitted" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.DialogMsg}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="DialogMsg" #name="ngModel" [(ngModel)]="formData.DialogMsg" required></div>
+            </div>
+          </div>
+          <div id="row23" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.OK}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="OK" #name="ngModel" [(ngModel)]="formData.OK" required></div>
+            </div>
+
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.TitleHdr}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="50" class="form-control" name="TitleHdr" #name="ngModel" [(ngModel)]="formData.TitleHdr" required></div>
+            </div>
+
+          </div>
+          <div id="row24" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Confidential}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="Confidential" #name="ngModel" [(ngModel)]="formData.Confidential" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.SOP}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="50" class="form-control" name="SOP" #name="ngModel" [(ngModel)]="formData.SOP" required></div>
+            </div>
+          </div>
+          <div id="row25" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Welcome}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="50" class="form-control" name="Welcome" #name="ngModel" [(ngModel)]="formData.Welcome" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AuthMsg}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="AuthMsg" #name="ngModel" [(ngModel)]="formData.AuthMsg" required></div>
+            </div>
+          </div>
+          <div id="row26" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AuthErrorMsg}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AuthErrorMsg" #name="ngModel" [(ngModel)]="formData.AuthErrorMsg" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AuthNoAccessMsg}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="AuthNoAccessMsg" #name="ngModel" [(ngModel)]="formData.AuthNoAccessMsg" required></div>
+            </div>
+          </div>
+          <div id="row27" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AuthOKMsg}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AuthOKMsg" #name="ngModel" [(ngModel)]="formData.AuthOKMsg" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LoginUserName}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="LoginUserName" #name="ngModel" [(ngModel)]="formData.LoginUserName" required></div>
+            </div>
+          </div>
+          <div id="row28" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LoginPassword}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="LoginPassword" #name="ngModel" [(ngModel)]="formData.LoginPassword" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LoginSubmit}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="LoginSubmit" #name="ngModel" [(ngModel)]="formData.LoginSubmit" required></div>
+            </div>
+          </div>
+          <div id="row27" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AppTitle}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AppTitle" #name="ngModel" [(ngModel)]="formData.AppTitle" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.NewForm}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="NewForm" #name="ngModel" [(ngModel)]="formData.NewForm" required></div>
+            </div>
+          </div>
+          <div id="row28" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Logout}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="Logout" #name="ngModel" [(ngModel)]="formData.Logout" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.FormError}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="FormError" #name="ngModel" [(ngModel)]="formData.FormError" required></div>
+            </div>
+          </div>
+          <div id="row29" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AdminMenuHeader}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AdminMenuHeader" #name="ngModel" [(ngModel)]="formData.AdminMenuHeader" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AdminMenuAccessControl}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="AdminMenuAccessControl" #name="ngModel" [(ngModel)]="formData.AdminMenuAccessControl" required></div>
+            </div>
+          </div>
+          <div id="row30" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AdminMenuLangSetup}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AdminMenuLangSetup" #name="ngModel" [(ngModel)]="formData.AdminMenuLangSetup" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.LangNameEnglish}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="LangNameEnglish" #name="ngModel" [(ngModel)]="formData.LangNameEnglish" required></div>
+            </div>
+          </div>
+          <div id="row31" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AdminLanguage}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AdminLanguage" #name="ngModel" [(ngModel)]="formData.AdminLanguage" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AdminLanguageCode}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="AdminLanguageCode" #name="ngModel" [(ngModel)]="formData.AdminLanguageCode" required></div>
+            </div>
+          </div>
+          <div id="row32" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.FormUpdated}}</div>
+              <div class="col-sm-12 fld"> <input type="text" maxlength="100" class="form-control" name="FormUpdated" #name="ngModel" [(ngModel)]="formData.FormUpdated" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.FormAdded}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="FormAdded" #name="ngModel" [(ngModel)]="formData.FormAdded" required></div>
+            </div>
+          </div>
+          <div id="row33" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.DeleteConfirm}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="DeleteConfirm" #name="ngModel" [(ngModel)]="formData.DeleteConfirm" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.KeywordValues}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="KeywordValues" #name="ngModel" [(ngModel)]="formData.KeywordValues" required></div>
+            </div>
+          </div>
+          <div id="row34" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.Keyword}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="Keyword" #name="ngModel" [(ngModel)]="formData.Keyword" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.KeywordDescription}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="KeywordDescription" #name="ngModel" [(ngModel)]="formData.KeywordDescription" required></div>
+            </div>
+          </div>
+          <div id="row34" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.KeywordValue}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="KeywordValue" #name="ngModel" [(ngModel)]="formData.KeywordValue" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AclInstructions}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AclInstructions" #name="ngModel" [(ngModel)]="formData.AclInstructions" required></div>
+            </div>
+          </div>
+          <div id="row34" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AclGroups}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AclGroups" #name="ngModel" [(ngModel)]="formData.AclGroups" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AclGroupsAdmin}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AclGroupsAdmin" #name="ngModel" [(ngModel)]="formData.AclGroupsAdmin" required></div>
+            </div>
+          </div>
+          <div id="row34" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{langData?.AclGroupsIT}}</div>
+              <div class="col-sm-12 fld"><input type="text" maxlength="100" class="form-control" name="AclGroupsIT" #name="ngModel" [(ngModel)]="formData.AclGroupsIT" required></div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2"></div>
+              <div class="col-sm-12 fld"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{formTouched(fieldForm.dirty)}}
+    </form>
+        -->
+  </div>
+</div>
+

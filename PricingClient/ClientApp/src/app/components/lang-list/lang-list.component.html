@@ -1,0 +1,34 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay">
+    <div class="loader-overlay" *ngIf="!resourceLoaded">
+      <div>
+        <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="panel-heading"><span class="hdr">{{langData?.AdminMenuLangSetup}}</span></div>
+      <div class="col-sm-12 hdr buttton">
+        <a [routerLink]="['/langform/new']"><button class="btn btn-primary"><span class='glyphicon glyphicon-plus-sign'></span>&nbsp;{{langData?.NewLangRecord}}</button></a>
+      </div>
+      <table mat-table class="datatable" [dataSource]="(allLanguages)" matSort>
+        <tr>
+          <ng-container matColumnDef="LangNameEnglish">
+            <th *matHeaderCellDef class="tblCell">{{langData?.AdminLanguage}}</th>
+            <td *matCellDef="let item" class="tblCell"><a routerLink="/langform/{{item.langid}}">{{item.LangNameEnglish}}</a></td>
+          </ng-container>
+          <ng-container matColumnDef="Lang">
+            <th *matHeaderCellDef class="tblCell">{{langData?.AdminLanguageCode}}</th>
+            <td *matCellDef="let item" class="tblCell"><a routerLink="/langform/{{item.langid}}">{{item.Lang}}</a></td>
+          </ng-container>
+          <ng-container matColumnDef="Remove">
+            <th *matHeaderCellDef class="tblCell">&nbsp;</th>
+            <td *matCellDef="let item" class="tblCell"><button class="btn btn-xs btn-primary" (click)="deleteRecord(item.langid)" *ngIf="item.Lang!='en'"><span class='glyphicon glyphicon-trash'></span></button></td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <tr class="datarow" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+  </div>

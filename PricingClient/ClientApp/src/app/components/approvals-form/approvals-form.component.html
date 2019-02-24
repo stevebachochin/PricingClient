@@ -1,0 +1,174 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay" *ngIf="!resourceLoaded">
+    <div>
+      <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  <div>
+    <div class="container" *ngIf="resourceLoaded && appFormData && appArrData">
+
+      <form (ngSubmit)="updateForm(appFormData)" #fieldForm="ngForm">
+
+
+        <div class="panel-heading row">
+          <div class="col-sm-6 hdr">Approval Setup</div>
+        </div>
+        <div class="panel-heading row">
+
+
+          <div class="col-sm-6 hdr buttton">
+            <!--  <langpicklist></langpicklist>-->
+            <button type="button" class="btn btn-default" (click)="cancelForm()" *ngIf="editable"><span class='glyphicon glyphicon-remove-circle'></span>&nbsp;Cancel</button>
+            <button type="button" class="btn btn-default" [disabled]="disableEdit()" (click)="editForm()" *ngIf="!editable"><span class='glyphicon glyphicon-pencil'></span>&nbsp;Edit</button>
+            <button type="submit" class="btn btn-default" *ngIf="editable" [disabled]="!fieldForm.valid"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;Save</button>
+            <button type="submit" class="btn btn-default" [disabled]="!fieldForm.valid" *ngIf="editable"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;Submit</button>
+            <a [routerLink]="['/approvalsview']"><button class="btn btn-default"><span class='glyphicon glyphicon-circle-arrow-left'></span>&nbsp;Back</button></a>
+          </div>
+        </div>
+        <div class="col-sm-12 errmsg" [innerHTML]="getFormMsg()"></div>
+        <div name="section1" class="container00">
+          <div name="row1" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">Territory</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{appFormData?.Territory == "n/a" ? "Non-Specific" : appFormData?.Territory }}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="Territory" #name="ngModel" [(ngModel)]="appFormData.Territory">
+                    <mat-option value="">-- select --</mat-option>
+                    <mat-option value="Non-Specific">Non-Specific</mat-option>
+                    <mat-option *ngFor="let territoryitem of allTerritoriesArr" [value]=territoryitem>{{territoryitem}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">Type</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{appFormData?.FormTypeName}}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="FormType" #name="ngModel" [(ngModel)]="appFormData.FormType" (selectionChange)="formTypeSelectionChange($event)">
+                    <mat-option [value]="">-- select --</mat-option>
+                    <mat-option *ngFor="let listitem of typeList" [value]=listitem.type>{{listitem.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">Number of Approvals</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{appFormData?.NumApprovals}}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="NumApprovals" #name="ngModel" [(ngModel)]="appFormData.NumApprovals">
+                    <mat-option *ngFor="let appNum of appNumArr" [value]=appNum>{{appNum}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2"></div>
+              <div class="col-sm-12 fld">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- REPEATABLE -->
+        <div *ngFor="let x of ' '.repeat(appFormData.NumApprovals).split(''), let i = index" class="container0">
+          <div class="subpanel-heading">
+            <div class="col-sm-12 subhdr">Approver #{{i+1}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fmlabel2">Title</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{appFormData["ApproverTitle" + i]}}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name='"ApproverTitle" + {{i}}' #name="ngModel" [(ngModel)]='appFormData["ApproverTitle" + i]' (selectionChange)="approverTypeChange($event, i)" required>
+                    <mat-option value="">-- select --</mat-option>
+                    <mat-option *ngFor="let apptypeitem of allApproverTypesArr" [value]=apptypeitem>{{apptypeitem}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+           </div>
+
+          <div class="row">
+
+            <div class="col-sm-12 column">
+              <div *ngIf='appFormData["ApproverTitle" + i]!="Region Manager"'>
+                <div class="col-sm-12 fmlabel2">Approver(s)</div>
+                <div class="col-sm-12 fld">
+                  <ul class="frmList" *ngIf="!editable">
+                    <li *ngFor='let copy1usr of appArrData["ApproverArr" + i]'>{{copy1usr.split('~')[0]}}</li>
+                  </ul>
+                  <mat-form-field *ngIf="editable">
+                    <mat-select name='"ApproverArr" + {{i}}' #name="ngModel" [(ngModel)]='appArrData["ApproverArr" + i]' [multiple]="true" #multiSelect (selectionChange)="getPersonsEmailAddressMulti($event, 'Approver' + i, 'ApproverEmail' + i)">
+                      <ngx-mat-select-search [formControl]="adNamesPicklistMultiFilterCtrl"></ngx-mat-select-search>
+                      <mat-option *ngFor='let cpyusr of appArrData["ApproverArr" + i]' [value]="cpyusr.split('~')[0]+'~'+cpyusr.split('~')[1]">{{cpyusr.split('~')[0]}}</mat-option>
+                      <mat-option *ngFor="let adusr of filteredADNamesMulti | async" [value]='adusr.ADFullName+"~"+adusr.ADEmailAddress'>{{adusr.ADFullName}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fmlabel2">Copy</div>
+              <div class="col-sm-12 fld">
+
+                <ul class="frmList" *ngIf="!editable">
+                  <li *ngFor='let copy1usr of appArrData["CopyArr" + i]'>{{copy1usr.split('~')[0]}}</li>
+                </ul>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name='"CopyArr" + {{i}}' #name="ngModel" [(ngModel)]='appArrData["CopyArr" + i]' [multiple]="true" #multiSelect (selectionChange)="getPersonsEmailAddressMulti($event, 'Copy' + i, 'CopyEmail' + i)">
+                    <ngx-mat-select-search [formControl]="adNamesPicklistMultiFilterCtrl"></ngx-mat-select-search>
+                    <mat-option *ngFor='let cpyusr of appArrData["CopyArr" + i]' [value]="cpyusr.split('~')[0]+'~'+cpyusr.split('~')[1]">{{cpyusr.split('~')[0]}}</mat-option>
+                    <mat-option *ngFor="let adusr of filteredADNamesMulti | async" [value]='adusr.ADFullName+"~"+adusr.ADEmailAddress'>{{adusr.ADFullName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--END REPEATABLE-->
+        <div name="sendtoapprovers" class="container0">
+          <div class="subpanel-heading">
+            <div class="col-sm-12 subhdr">Send Approved Forms to</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fld">
+
+                <ul class="frmList" *ngIf="!editable">
+                  <li *ngFor='let copytousr of appArrData["sendToArr"]'>{{copytousr.split('~')[0]}}</li>
+                </ul>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="SendToArr" #name="ngModel" [(ngModel)]='appArrData["sendToArr"]' [multiple]="true" #multiSelect (selectionChange)="getPersonsEmailAddressMulti($event, 'ApprovalSendTo', 'ApprovalSendToEmail')">
+                    <ngx-mat-select-search [formControl]="adNamesPicklistMultiFilterCtrl"></ngx-mat-select-search>
+                    <mat-option *ngFor='let cpyusr of appArrData["sendToArr"]' [value]="cpyusr.split('~')[0]+'~'+cpyusr.split('~')[1]">{{cpyusr.split('~')[0]}}</mat-option>
+                    <mat-option *ngFor="let adusr of filteredADNamesMulti | async" [value]='adusr.ADFullName+"~"+adusr.ADEmailAddress'>{{adusr.ADFullName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{formTouched(fieldForm.dirty)}}
+
+      </form>
+      </div>
+    </div>
+  </div>
+
+
+
+

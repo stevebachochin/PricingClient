@@ -1,0 +1,13 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay" *ngIf="!resourceLoaded">
+    <div>
+      <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  <div class="panel-heading row" *ngIf="resourceLoaded">
+    <div class="col-sm-6 hdr buttton">
+     <!-- <langpicklist></langpicklist>-->
+    </div>
+    <div class="col-sm-6 homePghdr" [innerHTML]="getInnerHTMLValue()"></div>
+  </div>
+</div>

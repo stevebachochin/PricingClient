@@ -1,0 +1,69 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay">
+    <div class="loader-overlay" *ngIf="!resourceLoaded">
+      <div>
+        <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="col-sm-12 langPicklist">
+      <langpicklist></langpicklist>
+    </div>
+    <div class="panel-heading">{{langData?.ViewFRTitle}}</div>
+
+    <div class="panel-srch">
+      <div class="col-sm-5 column">
+        <div class="col-sm-6 fmlabelright">{{langData?.ViewSearchFldName}}</div>
+        <div class="col-sm-6 fld">
+          <select [(ngModel)]="querySearchName">
+            <option value="CreatedBy">{{langData?.ViewCreatedBy}}</option>
+            <option value="HospitalReq">{{langData?.HospitalReq}}</option>
+            <option value="FormNumber">{{langData?.ViewFormNumber}}</option>
+            <option value="Status">{{langData?.ViewStatus}}</option>
+            <option value="FreezerType">{{langData?.FreezerType}}</option>
+            <option value="HospitalShip">{{langData?.HospitalShip}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 column">
+        <div class="col-sm-4 fmlabelright">{{langData?.ViewSearchText}}</div>
+        <div class="col-sm-8 fld"><input [(ngModel)]="querySearch" placeholder=" {{langData?.ViewEnterSearchText}}" (keyup.enter)="searchForms(querySearchName, querySearch)" required></div>
+      </div>
+      <div class="col-sm-3 column">
+        <div class="col-sm-6 hdr btn-div"><button type="button" (click)="searchForms(querySearchName, querySearch)" [disabled]="querySearch == '' || querySearchName == 'null'" class="btn btn-default"><span class='glyphicon glyphicon-ok-circle'></span>{{langData?.ViewSearch}}</button></div>
+        <div class="col-sm-6 hdr btn-div"><button type="button" (click)="clearSearch()" class="btn btn-default"><span class='glyphicon glyphicon-ok-circle'></span>{{langData?.ViewClear}}</button></div>
+      </div>
+    </div>
+    <div class="container freezer">
+      <mat-table class="datatable freezertbl" [dataSource]="(frFormDataSource)" matSort>
+        <ng-container matColumnDef="CreatedBy">
+
+          <th *matHeaderCellDef mat-sort-header class="col1">{{langData?.ViewCreatedBy}}</th>
+          <td class="col1 description-cell" *matCellDef="let item" (click)="onRowClicked(item)">{{item.CreatedBy}}</td>
+        </ng-container>
+        <ng-container matColumnDef="HospitalReq">
+          <th *matHeaderCellDef mat-sort-header class="col2">{{langData?.HospitalReq}}</th>
+          <td class="col2 description-cell" *matCellDef="let item" (click)="onRowClicked(item)">{{item.HospitalReq}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Created">
+          <th *matHeaderCellDef mat-sort-header class="col3">{{langData?.ViewCreated}}</th>
+          <td class="col3 description-cell" *matCellDef="let item" (click)="onRowClicked(item)">{{item.Created | date:'MM/dd/yyyy'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+          <th *matHeaderCellDef mat-sort-header class="col4">{{langData?.ViewStatus}}</th>
+          <td class="col4 description-cell" *matCellDef="let item" (click)="onRowClicked(item)">{{item.Status}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Completed">
+          <th *matHeaderCellDef mat-sort-header class="col5">{{langData?.ViewCompleted}}</th>
+          <td class="col5 description-cell" *matCellDef="let item" (click)="onRowClicked(item)">{{item.Completed | date:'MM/dd/yyyy'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="FormNumber">
+          <th *matHeaderCellDef mat-sort-header class="colend">{{langData?.ViewFormNumber}}</th>
+          <td class="colend description-cell" *matCellDef="let item" (click)="onRowClicked(item)">{{item.FormNumber}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row class="datarow" *matRowDef="let row; columns: displayedColumns"></tr>
+      </mat-table>
+      <mat-paginator [length]="totalCount" [pageSize]="selectedPageSize" [pageSizeOptions]="[5, 10, 20]" (page)="paging($event)"></mat-paginator>
+    </div>
+  </div>
+</div>

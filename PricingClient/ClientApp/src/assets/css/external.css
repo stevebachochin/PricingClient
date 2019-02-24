@@ -1,0 +1,23 @@
+#wrapper[_ngcontent-c0] {
+  width: 100%;
+  text-align: center;
+}
+
+#innerwrapper {
+  background-color: white;
+  padding-bottom: 500px;
+  border-radius: 5px;
+}
+
+.innerwrapper {
+  display: inline-block;
+  width: 95%;
+  max-width: 1200px;
+}
+
+.row[_ngcontent-c0] {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+

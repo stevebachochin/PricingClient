@@ -1,0 +1,62 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay" *ngIf="!resourceLoaded">
+    <div>
+      <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  <div>
+
+    <form (ngSubmit)="updateForm(formData)" #fieldForm="ngForm">
+
+      <div class="panel-heading row">
+        <div class="col-sm-12"><span class="hdr"><br />Keyword Values<br />{{formData?.Keyword1}}</span><br /><span class="fld">help text...</span></div>
+        <div class="col-sm-12 errmsg" [innerHTML]="getFormMsg()"></div>
+        <div class="col-sm-6 hdr buttton">
+          <!--<langpicklist></langpicklist>-->
+          <button type="button" class="btn btn-default" (click)="cancelForm()" *ngIf="editable"><span class='glyphicon glyphicon-remove-circle'></span>&nbsp;Cancel</button>
+          <button type="submit" class="btn btn-default" [disabled]="!fieldForm.valid" *ngIf="editable"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;Save</button>
+          <button type="button" class="btn btn-default" (click)="editForm()" *ngIf="!editable"><span class='glyphicon glyphicon-pencil'></span>&nbsp;Edit</button>
+          <a [routerLink]="['/keyview']"><button class="btn btn-default"><span class='glyphicon glyphicon-circle-arrow-left'></span>&nbsp;Back</button></a>
+        </div>
+      </div>
+      <div class="container0">
+        <div>
+          <div id="row1" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel">Keyword</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{formData?.Keyword1}}</span>
+                <input  *ngIf="editable" type="text" maxlength="100" minlength="2" class="form-control" name="Keyword1" #name="ngModel" [(ngModel)]="formData.Keyword1" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel">Description</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{formData?.Description}}</span>
+                <input *ngIf="editable"  type="text" maxlength="300" class="form-control" name="Description" #name="ngModel" [(ngModel)]="formData.Description" required>
+              </div>
+            </div>
+          </div>
+
+          <div id="row2" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel">Values <span class="fmlablelExp">(one value per line)</span></div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable" [innerHTML]="displayKeywordValues"></span>
+                <!--<input *ngIf="editable" type="text" maxlength="1000" class="form-control" name="Value" #name="ngModel" [(ngModel)]="formData.Value" required>-->
+                <textarea  *ngIf="editable" ref-textarea maxlength="1000" [(ngModel)]="editableKeywordValues" name="Value" #name="ngModel" class="form-control" rows="10" required></textarea>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2"></div>
+              <div class="col-sm-12 fld"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{formTouched(fieldForm.dirty)}}
+    </form>
+
+  </div>
+</div>
+

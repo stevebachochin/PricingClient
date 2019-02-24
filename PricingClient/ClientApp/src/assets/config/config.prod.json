@@ -1,0 +1,10 @@
+{
+	"env": {
+	"name": "PROD"
+},
+  "ConnectionStrings": {
+    "apiServer": "http://uskenappdev01:8040/",
+    "apiAuthServer": "http://uskenappdev01:8010/",
+    "timeout": 1200000
+  }
+}

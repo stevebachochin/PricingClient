@@ -1,0 +1,53 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay" *ngIf="!resourceLoaded">
+    <div>
+      <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  <div>
+
+    <form (ngSubmit)="updateForm(formData)" #fieldForm="ngForm">
+
+      <div class="panel-heading row">
+        <div class="col-sm-12"><span class="hdr"><br />{{formData?.Region1}}&nbsp;Region</span><br /><span class="fld">help text...</span></div>
+        <div class="col-sm-12 errmsg" [innerHTML]="getFormMsg()"></div>
+        <div class="col-sm-6 hdr buttton">
+          <!--<langpicklist></langpicklist>-->
+          <button type="button" class="btn btn-default" (click)="cancelForm()" *ngIf="editable"><span class='glyphicon glyphicon-remove-circle'></span>&nbsp;Cancel</button>
+          <button type="submit" class="btn btn-default" [disabled]="!fieldForm.valid" *ngIf="editable"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;Save</button>
+          <button type="button" class="btn btn-default" (click)="editForm()" *ngIf="!editable"><span class='glyphicon glyphicon-pencil'></span>&nbsp;Edit</button>
+          <a [routerLink]="['/regionview']"><button class="btn btn-default"><span class='glyphicon glyphicon-circle-arrow-left'></span>&nbsp;Back</button></a>
+        </div>
+      </div>
+      <div class="container0">
+        <div>
+          <div id="row1" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">Region</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{formData?.Region1}}</span>
+                <input  *ngIf="editable" type="text" maxlength="50" minlength="2" class="form-control" name="Region1" #name="ngModel" [(ngModel)]="formData.Region1" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">Approver</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{formData?.Approver}}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name='Approver' #name="ngModel" [(ngModel)]='formData["Approver"]' (selectionChange)="getPersonsEmailAddress($event, 'Approver', 'ApproverEmail')" required>
+                    <ngx-mat-select-search [formControl]="adNamesPicklistFilterCtrl"></ngx-mat-select-search>
+                    <mat-option [value]='formData["Approver"]'>{{formData["Approver"]}}</mat-option>
+                    <mat-option *ngFor="let adusr of filteredADNames | async" [value]=adusr>{{adusr.ADFullName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{formTouched(fieldForm.dirty)}}
+    </form>
+
+  </div>
+</div>
+

@@ -1,0 +1,51 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="app-component navbar-brand" routerLink="/">
+        <img [src]="appLogo" alt="logo">
+        <span class="app-component appTitle">{{langData?.AppTitle}}</span>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" [collapse]=isCollapsed>
+      <ul class="nav navbar-nav">
+        <li class="dropdown" dropdown>
+          <a dropdownToggle class="dropdown-toggle"><span class="glyphicon glyphicon-plus-sign"></span>{{langData?.NewForm}}<span class="caret"></span></a>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/frform/new">{{langData?.MenuFZForm}}</a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/imform/new">{{langData?.MenuIMForm}}</a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/tmrform/new">{{langData?.MenuTMForm}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" dropdown>
+          <a dropdownToggle class="dropdown-toggle"><span class="glyphicon glyphicon-cog"></span>{{langData?.AdminMenuHeader}}<span class="caret"></span></a>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/approvalsview">{{langData?.AdminMenuApprSetup}}</a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/regionview">{{langData?.AdminMenuRegionSetup}}</a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/keyview">{{langData?.KeywordValues}}</a>
+            </li>
+          </ul>
+        </li>
+        <!--
+        <li routerLinkActive="active"><a routerLink="" (click)="Logout()"><span class='glyphicon glyphicon-log-out'></span>{{langData?.Logout}}</a></li>
+        -->
+      </ul>
+    </div>
+  </div>
+</nav>

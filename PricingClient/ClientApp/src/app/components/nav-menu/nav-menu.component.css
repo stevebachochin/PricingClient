@@ -1,0 +1,118 @@
+.navbar-brand {
+  float: left;
+  height: 50px;
+  padding: 7px 15px;
+  font-size: 18px;
+  line-height: 20px;
+  color: white;
+  padding-top: 9px;
+}
+
+.navbar-brand > img {
+  display: inline;
+  height: 35px;
+  padding-right: 10px;
+}
+
+.glyphicon {
+  padding-right: 10px;
+}
+
+.navbar-default {
+  width: 100%;
+  padding-left: 0px;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: #007DC5;
+  background-image: none;
+  display: inline-table;
+  margin: auto;
+  border-radius: 4px;
+}
+
+.navbar-default a {
+  color: white;
+  text-decoration: none;
+}
+
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    color: white;
+    background-color: #007DC5;
+  }
+
+.navbar-default a:hover {
+   color: #FFFF00;
+   text-decoration: none;
+}
+
+@media screen and (min-width: 800px) {
+  .floatright{
+  float: right;
+  }
+}
+
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+  background-color: #0070b1;
+}
+
+
+
+.open .dropdown-menu {
+  background-color: #0070b1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-color: #007DC5;
+}
+
+
+.open > .dropdown-menu > li > a:hover {
+  color: yellow;
+  background-color: #0070b1;
+}
+
+.dropdown-menu .divider {
+  background-color: #007DC5;
+}
+
+li {
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #FFF;
+  }
+  .navbar-nav .open .dropdown-menu > li > a {
+    text-align: left;
+    border-color: #007DC5;
+    padding-left:40px;
+  }
+
+  .dropdown-toggle {
+    color: yellow;
+    padding: 15px;
+    border-top-color: #007DC5;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: #007DC5;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  .navbar-right > li > a {
+    padding-top: 15px;
+  }
+
+  a {
+    text-align: left;
+  }
+
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: #e7e7e7;
+    padding-left: 20px;
+  }
+  
+}
+

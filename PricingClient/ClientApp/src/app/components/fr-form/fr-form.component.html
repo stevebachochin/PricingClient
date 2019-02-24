@@ -1,0 +1,407 @@
+<div id="summary" class="section panel panel-primary">
+  <div class="loader-overlay" *ngIf="!resourceLoaded">
+    <div>
+      <mat-progress-bar style="margin:0 auto;" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  <div>
+    <div class="container" *ngIf="frFormData &&  resourceLoaded">
+
+      <form (ngSubmit)="updateForm(frFormData)" #fieldForm="ngForm">
+
+
+        <div class="panel-heading-title row">
+          <div class="col-sm-6 hdr">{{frlangData?.FormTitle}}</div>
+        </div>
+        <div name="section00" class="container000">
+          <div name="row01" class="row">
+            <div class="col-sm-12 columnhdr">
+              <div class="col-sm-3 fmlabel2">{{frlangData?.FormNumber}}</div>
+              <div class="col-sm-9 fldhdr">
+                <span>{{frFormData.FormNumber}}</span>
+              </div>
+            </div>
+          </div>
+          <div name="row02" class="row">
+            <div class="col-sm-12 columnhdr">
+              <div class="col-sm-3 fmlabel2">{{frlangData?.Created}}</div>
+              <div class="col-sm-9 fldhdr">
+                <span>{{frFormData.Created | date : 'MM/dd/yyyy'}}</span>
+              </div>
+            </div>
+          </div>
+          <div name="row03" class="row">
+            <div class="col-sm-12 columnhdr">
+              <div class="col-sm-3 fmlabel2">{{frlangData?.Status}}</div>
+              <div class="col-sm-9 fldhdr">
+                <span>{{frFormData.Status}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-headingButtons">
+
+
+          <div class="col-sm-6 hdr buttton">
+            <!--  <langpicklist></langpicklist>-->
+            <button type="button" class="btn btn-default" (click)="cancelForm()" *ngIf="editable"><span class='glyphicon glyphicon-remove-circle'></span>&nbsp;{{langData?.CancelButton}}</button>
+            <button type="button" class="btn btn-default" [disabled]="disableEdit()" (click)="editForm()" *ngIf="!editable"><span class='glyphicon glyphicon-pencil'></span>&nbsp;{{langData?.EditButton}}</button>
+            <button type="submit" class="btn btn-default" *ngIf="editable"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;{{langData?.SaveButton}}</button>
+            <button type="submit" class="btn btn-default" [disabled]="!fieldForm.valid" *ngIf="editable"><span class='glyphicon glyphicon-ok-circle'></span>&nbsp;{{langData?.SubmitButton}}</button>
+            <a [routerLink]="['/home']"><button class="btn btn-default"><span class='glyphicon glyphicon-circle-arrow-left'></span>&nbsp;{{langData?.BackButton}}</button></a>
+          </div>
+        </div>
+        <div class="col-sm-12 errmsg" [innerHTML]="getFormMsg()"></div>
+        <div name="section1" class="container00">
+          <div>
+            <div class="row">
+              <div class="col-sm-6 column">
+                <div class="col-sm-12 fmlabel2">{{frlangData?.Representative}}</div>
+                <div class="col-sm-12 fld">
+                  <span *ngIf="!editable">{{frFormData.Representative}}</span>
+                  <input type="text" maxlength="100" minlength="3" class="form-control" name="Representative" #name="ngModel" [(ngModel)]="frFormData.Representative" *ngIf="editable" required>
+                </div>
+              </div>
+              <div class="col-sm-6 column">
+                <div class="col-sm-12 fmlabel2">{{frlangData?.Region}}</div>
+                <div class="col-sm-12 fld">
+                  <span *ngIf="!editable">{{frFormData.Region}}</span>
+                  <mat-form-field *ngIf="editable">
+                    <mat-select name="Region" #name="ngModel" [(ngModel)]="frFormData.Region" (selectionChange)="getApprovers($event)" required >
+                      <mat-option value="">{{langData?.DialogBoxSelect}}</mat-option>
+                      <mat-option *ngFor="let region of allRegions" value={{region.Region1}}>{{region.Region1}}</mat-option>
+                      <mat-option *ngIf="selectDuplicateCheck()" value={{frFormData.Region}}>{{frFormData.Region}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div name="section2" class="container0">
+          <div class="subpanel-heading">
+            <div class="col-sm-12 subhdr">{{frlangData?.SectionShipHospital}}</div>
+          </div>
+          <div name="row21" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData?.HospitalReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.HospitalReq}}</span>
+                <input type="text" maxlength="100" class="form-control" name="HospitalReq" #name="ngModel" [(ngModel)]="frFormData.HospitalReq" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'HospitalShip')" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData?.AccountNumberReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.AccountNumberReq}}</span>
+                <input type="text" maxlength="100" class="form-control" name="AccountNumberReq" #name="ngModel" [(ngModel)]="frFormData.AccountNumberReq" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'AccountNumberShip')" required>
+              </div>
+            </div>
+          </div>
+          <div name="row22" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.Address1Req}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.Address1Req}}</span>
+                <input type="text" maxlength="100" class="form-control" name="Address1Req" #name="ngModel" [(ngModel)]="frFormData.Address1Req" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'Address1Ship')" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.Address2Req}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.Address2Req}}</span>
+                <input type="text" maxlength="100" class="form-control" name="Address2Req" #name="ngModel" [(ngModel)]="frFormData.Address2Req" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'Address2Ship')" >
+              </div>
+            </div>
+          </div>
+          <div name="row23" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.CountryReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.CountryReq}}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="CountryReq" #name="ngModel" [ngModel]="frFormData.CountryReq" (ngModelChange)="onChangeState($event, 'Req')" required>
+                    <ngx-mat-select-search [formControl]="countriesPicklistFilterCtrl"></ngx-mat-select-search>
+                    <mat-option value=''>{{langData?.DialogBoxSelect}}</mat-option>
+                    <mat-option *ngFor="let country of filteredCountries | async" value={{country?.Code}}>{{country?.CountryName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div name="row23" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.StateReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.StateReq}}</span>
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="StateReq" #name="ngModel" [(ngModel)]="frFormData.StateReq" (ngModelChange)="onChangeSetSameAddrValue($event, 'StateShip')"required>
+                    <mat-option value=''>{{langData?.DialogBoxSelect}}</mat-option>
+                    <mat-option *ngIf="frFormData.CountryReq!='US'" value='other'>{{langData?.DialogBoxOther}}</mat-option>
+                    <ng-container *ngIf="frFormData.CountryReq=='US'">
+                      <ngx-mat-select-search [formControl]="statesPicklistFilterCtrl"></ngx-mat-select-search>
+                      <mat-option *ngFor="let state of filteredStates | async" value={{state?.Code}}>{{state?.StateName}}</mat-option>
+                    </ng-container>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngIf="frFormData.StateReq=='other'" class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.StateOtherReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.StateOtherReq}}</span>
+                <input type="text" maxlength="100" class="form-control" name="StateOtherReq" #name="ngModel" [(ngModel)]="frFormData.StateOtherReq" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'StateOtherShip')" required>
+              </div>
+            </div>
+          </div>
+          <div name="row24" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.CityReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.CityReq}}</span>
+                <input type="text" maxlength="100" class="form-control" name="CityReq" #name="ngModel" [(ngModel)]="frFormData.CityReq" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'CityShip')" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.ZipReq}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.ZipReq}}</span>
+                <input type="text" maxlength="100" class="form-control" name="ZipReq" #name="ngModel" [(ngModel)]="frFormData.ZipReq" *ngIf="editable" (ngModelChange)="onChangeSetSameAddrValue($event, 'ZipShip')" required>
+              </div>
+            </div>
+          </div>
+          <div name="row25" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.ContactName}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.ContactName}}</span>
+                <input type="text" maxlength="100" class="form-control" name="ContactName" #name="ngModel" [(ngModel)]="frFormData.ContactName" *ngIf="editable" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.ContactPhone}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.ContactPhone}}</span>
+                <input type="text" maxlength="100" class="form-control" name="ContactPhone" #name="ngModel" [(ngModel)]="frFormData.ContactPhone" *ngIf="editable" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div name="section3" class="container0">
+          <div class="subpanel-heading">
+            <div class="col-sm-12 subhdr">{{frlangData.SectionShipHospital}}</div>
+          </div>
+
+          <div name="row31" class="row" *ngIf="(!editable && frFormData.SameHospAddr=='yes')||editable">
+            <div class="col-sm-12 column">
+              <div class="col-sm-12 fmlabel2">
+                <div class="ckbox1" *ngIf="editable"><input type="checkbox" [checked]="frFormData.SameHospAddr == 'yes'" (change)="toggleSameAddressCheckBox($event.srcElement, 'SameHospAddr')" name="SameHospAddr"></div>
+                <div class="ckboxlbl1"><span>Same as Requesting Hospital Address</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div name="row32" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.HospitalShip}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.HospitalShip}}</span>
+                <input type="text" maxlength="100" class="form-control" name="HospitalShip" #name="ngModel" [(ngModel)]="frFormData.HospitalShip" *ngIf="editable && frFormData.SameHospAddr != 'yes'" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.AccountNumberShip}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.AccountNumberShip}}</span>
+                <input type="text" maxlength="100" class="form-control" name="AccountNumberShip" #name="ngModel" [(ngModel)]="frFormData.AccountNumberShip" *ngIf="editable && frFormData.SameHospAddr != 'yes'" required>
+              </div>
+            </div>
+          </div>
+          <div name="row33" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.Address1Ship}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.Address1Ship}}</span>
+                <input type="text" maxlength="100" class="form-control" name="Address1Ship" #name="ngModel" [(ngModel)]="frFormData.Address1Ship" *ngIf="editable && frFormData.SameHospAddr != 'yes'" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.Address2Ship}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.Address2Ship}}</span>
+                <input type="text" maxlength="100" class="form-control" name="Address2Ship" #name="ngModel" [(ngModel)]="frFormData.Address2Ship" *ngIf="editable && frFormData.SameHospAddr != 'yes'">
+              </div>
+            </div>
+          </div>
+          <div name="row34" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.CountryShip}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.CountryShip}}</span>
+                <mat-form-field *ngIf="editable && frFormData.SameHospAddr != 'yes'">
+                  <mat-select name="CountryShip" #name="ngModel" [ngModel]="frFormData.CountryShip" (ngModelChange)="onChangeState($event, 'Ship')" required>
+                    <ngx-mat-select-search [formControl]="countriesPicklistFilterCtrl"></ngx-mat-select-search>
+                    <mat-option value=''>{{langData?.DialogBoxSelect}}</mat-option>
+                    <mat-option *ngFor="let country of filteredCountries | async" value={{country.Code}}>{{country.CountryName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div name="row345" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.StateShip}}</div>
+
+              <div class="col-sm-12 fld">
+                  <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.StateShip}}</span>
+                  <mat-form-field *ngIf="editable && frFormData.SameHospAddr != 'yes'">
+                    <mat-select name="StateShip" #name="ngModel" [(ngModel)]="frFormData.StateShip" required>
+                      <mat-option value=''>{{langData?.DialogBoxSelect}}</mat-option>
+                      <mat-option *ngIf="frFormData.CountryShip!='US'" value='other'>{{langData?.DialogBoxOther}}</mat-option>
+                      <ng-container *ngIf="frFormData.CountryShip=='US'">
+                        <ngx-mat-select-search [formControl]="statesPicklistFilterCtrl"></ngx-mat-select-search>
+                        <mat-option *ngFor="let state of filteredStates | async" value={{state?.Code}}>{{state?.StateName}}</mat-option>
+                        <!--<mat-option *ngFor="let state of states" value={{state.Code}}>{{state.StateName}}</mat-option>-->
+                      </ng-container>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+            <div *ngIf="frFormData.StateShip=='other'" class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.StateOtherShip}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.StateOtherShip}}</span>
+                <input type="text" maxlength="100" class="form-control" name="StateOtherShip" #name="ngModel" [(ngModel)]="frFormData.StateOtherShip"  *ngIf="editable && frFormData.SameHospAddr != 'yes'" required>
+              </div>
+            </div>
+
+          </div>
+          <div name="row35" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.CityShip}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.CityShip}}</span>
+                <input type="text" maxlength="100" class="form-control" name="CityShip" #name="ngModel" [(ngModel)]="frFormData.CityShip" *ngIf="editable && frFormData.SameHospAddr != 'yes'" required>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.ZipShip}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable || frFormData.SameHospAddr == 'yes'">{{frFormData.ZipShip}}</span>
+                <input type="text" maxlength="100" class="form-control" name="ZipShip" #name="ngModel" [(ngModel)]="frFormData.ZipShip" *ngIf="editable && frFormData.SameHospAddr != 'yes'" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div name="section4" class="container0">
+          <div class="subpanel-heading">
+            <div class="col-sm-12 subhdr">{{frlangData.SectionDetails}}</div>
+          </div>
+          <div name="row21" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.FreezerType}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.FreezerType}}</span>
+
+
+                <mat-form-field *ngIf="editable">
+                  <mat-select name="FreezerType" #name="ngModel" [ngModel]="frFormData.FreezerType" required>
+                    <mat-option value=''>{{langData?.DialogBoxSelect}}</mat-option>
+                    <mat-option *ngFor="let freezer of allFreezerTypesArr" value={{freezer}}>{{freezer}}</mat-option>
+                    <mat-option value='Other'>{{langData?.DialogBoxOther}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2" *ngIf="frFormData.FreezerType=='Other'">{{frlangData.FreezerTypeOther}}</div>
+              <div class="col-sm-12 fld" *ngIf="frFormData.FreezerType=='Other'">
+                <span *ngIf="!editable">{{frFormData.FreezerTypeOther}}</span>
+                <input type="text" maxlength="100" class="form-control" name="FreezerTypeOther" #name="ngModel" [(ngModel)]="frFormData.FreezerTypeOther" *ngIf="editable" required>
+              </div>
+            </div>
+          </div>
+          <div name="row22" class="row">
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.ReqArrivalDate}}</div>
+              <div class="col-sm-6 fld">
+                <span *ngIf="!editable">{{frFormData.ReqArrivalDate | date : 'MM/dd/yyyy'}}</span>
+                <mat-form-field *ngIf="editable" appearance="standard">
+                  <input matInput [matDatepicker]="picker" class="date-control" name="ReqArrivalDate" #name="ngModel" [(ngModel)]="frFormData.ReqArrivalDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-6 column">
+              <div class="col-sm-12 fmlabel2">{{frlangData.PONumber}}</div>
+              <div class="col-sm-12 fld">
+                <span *ngIf="!editable">{{frFormData.PONumber}}</span>
+                <input type="text" maxlength="100" class="form-control" name="PONumber" #name="ngModel" [(ngModel)]="frFormData.PONumber" *ngIf="editable">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        {{formTouched(fieldForm.dirty)}}
+
+      </form>
+
+      <!--START----------------------------------------------------->
+
+      <div class="containerAppr" *ngIf="resourceLoaded">
+        <div class="col-sm-12 subhdr containerApprHdr">
+          {{frlangData.Approvers}}
+        </div>
+          <div class="row containerApprHdr">
+            <div class="col-sm-3 columnApprHdr fmlabel2">
+              {{frlangData.ApproverTitles}}
+            </div>
+            <div class="col-sm-3 columnApprHdr fmlabel2">
+              {{frlangData.Approvers}}
+            </div>
+            <div class="col-sm-3 columnApprHdr fmlabel2">
+              {{frlangData.Signatures}}
+            </div>
+            <div class="col-sm-3 columnApprHdr fmlabel2">
+              {{frlangData.ApproverDecisions}}
+            </div>
+          </div>
+        <!-- REPEATABLE -->
+        <div *ngFor="let x of ' '.repeat(frFormData.NumApprovals).split(''), let i = index" class="row apprrow">
+          <div class="col-sm-3 columnAppr">
+            <span>{{frFormData["ApproverTitle" + i]}}</span>
+          </div>
+          <div class="col-sm-3 columnAppr">
+            <div>
+              <ul class="apprlist">
+                <li *ngFor='let apprusr of frFormData["Approver" + i].split(",")'>{{apprusr}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-3 columnAppr">
+            <span>{{frFormData["ApproverSignature" + i]}}</span>
+          </div>
+          <div class="col-sm-3 columnAppr">
+            <span>{{frFormData["ApproverDecision" + i]}}</span>
+          </div>
+        </div>
+        <!--END REPEATABLE-->
+      </div>
+
+      <!--FINISH----------------------------------------------------->
+    </div>
+  </div>
+  </div>
+
+
+
+

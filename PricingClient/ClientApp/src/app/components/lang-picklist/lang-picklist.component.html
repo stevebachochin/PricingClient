@@ -1,0 +1,8 @@
+      <div class="btn-group" dropdown *ngIf="selectedLanguageName">
+        <button dropdownToggle type="button" class="btnflag btn-primary dropdown-toggle" *ngIf="globals?.selectedLanguage">
+          <img class="flagimgbutton" src="assets/images/{{globals?.selectedLanguage}}.png" alt="logo" />{{selectedLanguageName}} <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li (click)="changeLanguage(lang.Lang1, lang.LangName)" role="menuitem" *ngFor="let lang of (allLanguages)"><img class="flagimg" src="assets/images/{{lang?.Lang1 }}.png" alt="logo" />&nbsp;{{lang.LangName}}</li>
+        </ul>
+      </div>
